@@ -16,23 +16,20 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Obx(
-            () => Row(
-              children: [
-                NavigationBar(),
-                if (navigationBarController.index.value == 0) DashBoard(),
-                if (navigationBarController.index.value == 1) Expanded(child: NewPatientPage()),
-                if (navigationBarController.index.value == 2 && navigationBarController.password.value == 'asd123')
-                  Expanded(child: NewDoctorPage()),
-                if (navigationBarController.index.value == 3) Expanded(child: PatientPage()),
-                if (navigationBarController.index.value == 4 && navigationBarController.password.value == 'asd123')
-                  Expanded(child: DoctorPage()),
-              ],
-            ),
-          )),
+      body: Obx(
+        () => Row(
+          children: [
+            NavigationBar(),
+            if (navigationBarController.index.value == 0) DashBoard(),
+            if (navigationBarController.index.value == 1) Expanded(child: NewPatientPage()),
+            if (navigationBarController.index.value == 2 && navigationBarController.password.value == 'asd123')
+              Expanded(child: NewDoctorPage()),
+            if (navigationBarController.index.value == 3) Expanded(child: PatientPage()),
+            if (navigationBarController.index.value == 4 && navigationBarController.password.value == 'asd123')
+              Expanded(child: DoctorPage()),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rehab_web/utils/chart.dart';
 import 'package:rehab_web/utils/colors.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'historic_checkin_page.dart';
 
-class RegisterPatientPage extends StatelessWidget {
+class RegisterPatientPage extends StatefulWidget {
+  @override
+  _RegisterPatientPageState createState() => _RegisterPatientPageState();
+}
+
+class _RegisterPatientPageState extends State<RegisterPatientPage> {
+  TextEditingController textEditingEmailController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +31,7 @@ class RegisterPatientPage extends StatelessWidget {
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
                         height: 400,
@@ -45,88 +54,159 @@ class RegisterPatientPage extends StatelessWidget {
                           "bem-estar"
                         ]),
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(3, 3), blurRadius: 8)],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(3, 3), blurRadius: 8)],
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  child: Text(
-                                    'Manoel Pereira',
-                                    style: GoogleFonts.notoSans(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 25.0,
-                                      color: Color(0xFF8591B0),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Text(
+                                        'Manoel Pereira',
+                                        style: GoogleFonts.notoSans(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 25.0,
+                                          color: Color(0xFF8591B0),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 7,
+                                    SizedBox(
+                                      height: 7,
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        'Cirurgia no coração',
+                                        style: GoogleFonts.notoSans(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 25.0,
+                                          color: Color(0xFF8591B0),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 7,
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        'Rua marechal deodoro',
+                                        style: GoogleFonts.notoSans(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 25.0,
+                                          color: Color(0xFF8591B0),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 7,
+                                    ),
+                                  ],
                                 ),
                                 Container(
-                                  child: Text(
-                                    'Cirurgia no coração',
-                                    style: GoogleFonts.notoSans(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 25.0,
-                                      color: Color(0xFF8591B0),
-                                    ),
+                                  padding: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      color: RehabColors().mainColor,
+                                      boxShadow: [
+                                        BoxShadow(color: Colors.black12, offset: Offset(3, 3), blurRadius: 8)
+                                      ],
+                                      borderRadius: BorderRadius.circular(40)),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 18.0,
+                                      ),
+                                      Container(
+                                        height: 23.0,
+                                        width: 23.0,
+                                        child: Icon(
+                                          Icons.chat,
+                                          size: 23.0,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 8.0,
+                                      ),
+                                      Container(
+                                        child: Text(
+                                          'Chat',
+                                          style: GoogleFonts.notoSans(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 25.0,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 15.0,
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 7,
-                                ),
-                                Container(
-                                  child: Text(
-                                    'Rua marechal deodoro',
-                                    style: GoogleFonts.notoSans(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 25.0,
-                                      color: Color(0xFF8591B0),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 7,
                                 ),
                               ],
                             ),
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  color: RehabColors().mainColor,
-                                  boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(3, 3), blurRadius: 8)],
-                                  borderRadius: BorderRadius.circular(40)),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 18.0,
-                                  ),
-                                  Container(
-                                    height: 23.0,
-                                    width: 23.0,
-                                    child: Icon(
-                                      Icons.chat,
-                                      size: 23.0,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 8.0,
-                                  ),
-                                  Container(
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                                color: Colors.blue,
+                                boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(3, 3), blurRadius: 8)],
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Alert(
+                                        context: context,
+                                        title: "Informe o email do paciente",
+                                        style: AlertStyle(
+                                            titleTextAlign: TextAlign.center,
+                                            titleStyle: TextStyle(color: Colors.black54, fontSize: 22),
+                                            buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
+                                        content: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            TextField(
+                                              controller: textEditingEmailController,
+                                              decoration: InputDecoration(
+                                                icon: Icon(Icons.email_outlined),
+                                                labelText: 'Email',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        buttons: [
+                                          DialogButton(
+                                            onPressed: () {
+                                              Get.back();
+                                              Get.snackbar('Sucesso', 'O aplicativo foi enviado no email informado!',
+                                                  colorText: Colors.white,
+                                                  backgroundColor: RehabColors().mainColor,
+                                                  margin: EdgeInsets.symmetric(vertical: 35, horizontal: 130),
+                                                  snackPosition: SnackPosition.TOP);
+                                            },
+                                            child: Text(
+                                              "Salvar",
+                                              style: TextStyle(color: Colors.white, fontSize: 20),
+                                            ),
+                                            color: RehabColors().mainColor,
+                                          )
+                                        ]).show();
+                                  },
+                                  child: Container(
                                     child: Text(
-                                      'Chat',
+                                      'Enviar app para o paciente',
                                       style: GoogleFonts.notoSans(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 25.0,
@@ -134,47 +214,19 @@ class RegisterPatientPage extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 15.0,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                            color: Colors.blue,
-                            boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(3, 3), blurRadius: 8)],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: Text(
-                                'Enviar app para o paciente',
-                                style: GoogleFonts.notoSans(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 25.0,
-                                  color: Colors.white,
                                 ),
-                              ),
+                                SizedBox(
+                                  height: 7,
+                                ),
+                                Icon(
+                                  Icons.send,
+                                  size: 35,
+                                  color: Colors.white,
+                                )
+                              ],
                             ),
-                            SizedBox(
-                              height: 7,
-                            ),
-                            Icon(
-                              Icons.send,
-                              size: 35,
-                              color: Colors.white,
-                            )
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

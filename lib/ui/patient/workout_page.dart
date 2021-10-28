@@ -20,25 +20,9 @@ class WorkoutPage extends StatelessWidget {
   final NavigationBarController navigationBarController = Get.put(NavigationBarController());
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Color(0xFFF8FBFF),
-        Color(0xFFFCFDFD),
-      ])),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: LargeChild(),
-      ),
-    );
-  }
-}
-
-class Body extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ResponsiveLayout(
-      largeScreen: LargeChild(),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: LargeChild(),
     );
   }
 }
@@ -56,144 +40,136 @@ class _LargeChildState extends State<LargeChild> {
   final NavigationBarController navigationBarController = Get.find();
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      alignment: Alignment.topCenter,
-      widthFactor: .7,
-      child: Padding(
-        padding: EdgeInsets.only(left: 580, top: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              height: 25,
-            ),
-            Text("Insiria os exercícios físicos para o paciente",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.quicksand(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF8591B0))),
-            SizedBox(
-              height: 25,
-            ),
-            Container(
-              height: 400,
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(color: Color(0xFFF6F6F6), borderRadius: BorderRadius.circular(40)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Obx(() => Expanded(
-                        child: AnimatedList(
-                          key: key,
-                          initialItemCount: navigationBarController.workoutItems.length,
-                          itemBuilder: (context, index, animation) => Column(
-                            children: [
-                              buildItem(navigationBarController.workoutItems[index], index, animation),
-                              if (navigationBarController.workoutItems[index] ==
-                                  navigationBarController.workoutItems.last)
-                                Padding(
-                                  padding: EdgeInsets.only(top: 30),
-                                  child: SendBtn(
-                                    'Adicionar',
-                                    hasPadding: false,
-                                    onTap: () {
-                                      Alert(
-                                          context: context,
-                                          title: "Adicione um exercício",
-                                          style: AlertStyle(
-                                              titleTextAlign: TextAlign.center,
-                                              titleStyle: TextStyle(color: Colors.black54, fontSize: 22),
-                                              buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
-                                          content: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                              TextField(
-                                                controller: textEditingConfirmController,
-                                                decoration: InputDecoration(
-                                                  icon: Icon(Icons.fitness_center_outlined),
-                                                  labelText: 'Nome',
-                                                ),
-                                              ),
-                                              TextField(
-                                                controller: textEditingController,
-                                                decoration: InputDecoration(
-                                                  icon: Icon(Icons.history),
-                                                  labelText: 'Repetições',
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          buttons: [
-                                            DialogButton(
-                                              onPressed: () {
-                                                Get.back();
-                                                insertItem(
-                                                    index,
-                                                    new Item(textEditingConfirmController.text,
-                                                        value: textEditingController.text));
-                                              },
-                                              child: Text(
-                                                "Salvar",
-                                                style: TextStyle(color: Colors.white, fontSize: 20),
-                                              ),
-                                              color: RehabColors().mainColor,
-                                            )
-                                          ]).show();
-                                    },
-                                  ),
-                                )
-                            ],
-                          ),
-                        ),
-                      )),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 35,
-            ),
-            SendBtn(
-              'Observações',
-              hasPadding: false,
-              onTap: () {
-                Alert(
-                    context: context,
-                    title: "Adicione observações sobre a alimentação",
-                    style: AlertStyle(
-                        titleTextAlign: TextAlign.center,
-                        titleStyle: TextStyle(color: Colors.black54, fontSize: 25),
-                        buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        TextField(
-                          controller: textEditingObservation,
-                          maxLines: 7,
-                          keyboardType: TextInputType.multiline,
-                          style: TextStyle(color: Colors.black38, fontSize: 18),
-                          decoration: InputDecoration(
-                            labelText: 'Observações',
-                            labelStyle: TextStyle(color: Colors.black38, fontSize: 18),
-                          ),
-                        ),
-                      ],
-                    ),
-                    buttons: [
-                      DialogButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        child: Text(
-                          "Salvar",
-                          style: TextStyle(color: Colors.white, fontSize: 25),
-                        ),
-                        color: RehabColors().mainColorHover,
-                      )
-                    ]).show();
-              },
-            ),
-          ],
+    return ListView(
+      shrinkWrap: true,
+      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 25),
+      children: <Widget>[
+        SizedBox(
+          height: 25,
         ),
-      ),
+        Text("Insiria os exercícios físicos para o paciente",
+            textAlign: TextAlign.center,
+            style: GoogleFonts.quicksand(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF8591B0))),
+        SizedBox(
+          height: 25,
+        ),
+        Container(
+          height: 400,
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(color: Color(0xFFF6F6F6), borderRadius: BorderRadius.circular(40)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Obx(() => Expanded(
+                    child: AnimatedList(
+                      key: key,
+                      initialItemCount: navigationBarController.workoutItems.length,
+                      itemBuilder: (context, index, animation) => Column(
+                        children: [
+                          buildItem(navigationBarController.workoutItems[index], index, animation),
+                          if (navigationBarController.workoutItems[index] == navigationBarController.workoutItems.last)
+                            Padding(
+                              padding: EdgeInsets.only(top: 30),
+                              child: SendBtn(
+                                'Adicionar',
+                                hasPadding: false,
+                                onTap: () {
+                                  Alert(
+                                      context: context,
+                                      title: "Adicione um exercício",
+                                      style: AlertStyle(
+                                          titleTextAlign: TextAlign.center,
+                                          titleStyle: TextStyle(color: Colors.black54, fontSize: 22),
+                                          buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
+                                      content: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          TextField(
+                                            controller: textEditingConfirmController,
+                                            decoration: InputDecoration(
+                                              icon: Icon(Icons.fitness_center_outlined),
+                                              labelText: 'Nome',
+                                            ),
+                                          ),
+                                          TextField(
+                                            controller: textEditingController,
+                                            decoration: InputDecoration(
+                                              icon: Icon(Icons.history),
+                                              labelText: 'Repetições',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      buttons: [
+                                        DialogButton(
+                                          onPressed: () {
+                                            Get.back();
+                                            insertItem(
+                                                index,
+                                                new Item(textEditingConfirmController.text,
+                                                    value: textEditingController.text));
+                                          },
+                                          child: Text(
+                                            "Salvar",
+                                            style: TextStyle(color: Colors.white, fontSize: 20),
+                                          ),
+                                          color: RehabColors().mainColor,
+                                        )
+                                      ]).show();
+                                },
+                              ),
+                            )
+                        ],
+                      ),
+                    ),
+                  )),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 35,
+        ),
+        SendBtn(
+          'Observações',
+          hasPadding: false,
+          onTap: () {
+            Alert(
+                context: context,
+                title: "Adicione observações sobre a alimentação",
+                style: AlertStyle(
+                    titleTextAlign: TextAlign.center,
+                    titleStyle: TextStyle(color: Colors.black54, fontSize: 25),
+                    buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    TextField(
+                      controller: textEditingObservation,
+                      maxLines: 7,
+                      keyboardType: TextInputType.multiline,
+                      style: TextStyle(color: Colors.black38, fontSize: 18),
+                      decoration: InputDecoration(
+                        labelText: 'Observações',
+                        labelStyle: TextStyle(color: Colors.black38, fontSize: 18),
+                      ),
+                    ),
+                  ],
+                ),
+                buttons: [
+                  DialogButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text(
+                      "Salvar",
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    ),
+                    color: RehabColors().mainColorHover,
+                  )
+                ]).show();
+          },
+        ),
+      ],
     );
   }
 

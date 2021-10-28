@@ -20,25 +20,9 @@ class GeneralCarePage extends StatelessWidget {
   final NavigationBarController navigationBarController = Get.put(NavigationBarController());
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Color(0xFFF8FBFF),
-        Color(0xFFFCFDFD),
-      ])),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: LargeChild(),
-      ),
-    );
-  }
-}
-
-class Body extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ResponsiveLayout(
-      largeScreen: LargeChild(),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: LargeChild(),
     );
   }
 }
@@ -55,98 +39,90 @@ class _LargeChildState extends State<LargeChild> {
   final NavigationBarController navigationBarController = Get.find();
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      alignment: Alignment.topCenter,
-      widthFactor: .7,
-      child: Padding(
-        padding: EdgeInsets.only(left: 580, top: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              height: 25,
-            ),
-            Text("Insiria os medicamentos para o seu paciente",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.quicksand(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF8591B0))),
-            SizedBox(
-              height: 25,
-            ),
-            Container(
-              height: 600,
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(color: Color(0xFFF6F6F6), borderRadius: BorderRadius.circular(40)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Obx(() => Expanded(
-                        child: AnimatedList(
-                          key: key,
-                          initialItemCount: navigationBarController.generalItems.length,
-                          itemBuilder: (context, index, animation) => Column(
-                            children: [
-                              buildItem(navigationBarController.generalItems[index], index, animation),
-                              if (navigationBarController.generalItems[index] ==
-                                  navigationBarController.generalItems.last)
-                                Padding(
-                                  padding: EdgeInsets.only(top: 30),
-                                  child: SendBtn(
-                                    'Adicionar',
-                                    hasPadding: false,
-                                    onTap: () {
-                                      Alert(
-                                          context: context,
-                                          title: "Adicione um medicamento",
-                                          style: AlertStyle(
-                                              titleTextAlign: TextAlign.center,
-                                              titleStyle: TextStyle(color: Colors.black54, fontSize: 22),
-                                              buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
-                                          content: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                              TextField(
-                                                controller: textEditingController,
-                                                decoration: InputDecoration(
-                                                  icon: Icon(Icons.history),
-                                                  labelText: 'Observações',
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          buttons: [
-                                            DialogButton(
-                                              onPressed: () {
-                                                Get.back();
-                                                insertItem(
-                                                    index,
-                                                    new Item(
-                                                      textEditingController.text,
-                                                    ));
-                                              },
-                                              child: Text(
-                                                "Salvar",
-                                                style: TextStyle(color: Colors.white, fontSize: 20),
-                                              ),
-                                              color: RehabColors().mainColor,
-                                            )
-                                          ]).show();
-                                    },
-                                  ),
-                                )
-                            ],
-                          ),
-                        ),
-                      )),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 35,
-            ),
-          ],
+    return ListView(
+      shrinkWrap: true,
+      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 25),
+      children: <Widget>[
+        SizedBox(
+          height: 25,
         ),
-      ),
+        Text("Insiria os medicamentos para o seu paciente",
+            textAlign: TextAlign.center,
+            style: GoogleFonts.quicksand(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF8591B0))),
+        SizedBox(
+          height: 25,
+        ),
+        Container(
+          height: 600,
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(color: Color(0xFFF6F6F6), borderRadius: BorderRadius.circular(40)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Obx(() => Expanded(
+                    child: AnimatedList(
+                      key: key,
+                      initialItemCount: navigationBarController.generalItems.length,
+                      itemBuilder: (context, index, animation) => Column(
+                        children: [
+                          buildItem(navigationBarController.generalItems[index], index, animation),
+                          if (navigationBarController.generalItems[index] == navigationBarController.generalItems.last)
+                            Padding(
+                              padding: EdgeInsets.only(top: 30),
+                              child: SendBtn(
+                                'Adicionar',
+                                hasPadding: false,
+                                onTap: () {
+                                  Alert(
+                                      context: context,
+                                      title: "Adicione um medicamento",
+                                      style: AlertStyle(
+                                          titleTextAlign: TextAlign.center,
+                                          titleStyle: TextStyle(color: Colors.black54, fontSize: 22),
+                                          buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
+                                      content: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          TextField(
+                                            controller: textEditingController,
+                                            decoration: InputDecoration(
+                                              icon: Icon(Icons.history),
+                                              labelText: 'Observações',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      buttons: [
+                                        DialogButton(
+                                          onPressed: () {
+                                            Get.back();
+                                            insertItem(
+                                                index,
+                                                new Item(
+                                                  textEditingController.text,
+                                                ));
+                                          },
+                                          child: Text(
+                                            "Salvar",
+                                            style: TextStyle(color: Colors.white, fontSize: 20),
+                                          ),
+                                          color: RehabColors().mainColor,
+                                        )
+                                      ]).show();
+                                },
+                              ),
+                            )
+                        ],
+                      ),
+                    ),
+                  )),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 35,
+        ),
+      ],
     );
   }
 
