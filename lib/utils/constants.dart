@@ -1,0 +1,3 @@
+const API_TIMEOUT = 15000;
+const MAX_TEXT_SCALE = 1.36;
+const FADE_IN_DURATION = 300;
