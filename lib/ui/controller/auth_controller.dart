@@ -33,6 +33,7 @@ class AuthController extends BaseController {
           options: api.Options(
             headers: {
               'authorization': 'Basic cmVoYWJpdDpxYS40NzM2',
+              'Access-Control-Allow-Origin' : '*'
             },
           ));
 
@@ -62,6 +63,7 @@ class AuthController extends BaseController {
           options: api.Options(
             headers: {
               'authorization': 'Bearer ${ApiProvider.instance.token}',
+              'Access-Control-Allow-Origin' : '*'
             },
           ));
 
