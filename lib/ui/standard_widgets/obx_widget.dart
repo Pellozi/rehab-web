@@ -28,13 +28,21 @@ class RehabObxWidget extends GetView<BaseController> {
         ),
       ),
       onError: this.onError ??
-          (error) => Center(
-                child: TextButton(
-                  child: Text("tentar novamente"),
-                  onPressed: () {
-                    controller.finishLoading();
-                  },
-                ),
+          (error) => Column(
+                children: [
+                  Text(
+                    error,
+                    style: TextStyle(fontSize: 18, color: Colors.black),
+                  ),
+                  Center(
+                    child: TextButton(
+                      child: Text("tentar novamente"),
+                      onPressed: () {
+                        controller.finishLoading();
+                      },
+                    ),
+                  ),
+                ],
               ),
     );
   }

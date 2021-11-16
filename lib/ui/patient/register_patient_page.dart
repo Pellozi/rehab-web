@@ -641,58 +641,58 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                     SizedBox(
                       height: 50.w,
                     ),
-                    Container(
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                          color: Colors.blue,
-                          boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(3, 3), blurRadius: 8)],
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Alert(
-                                  context: context,
-                                  title: "Informe o email do paciente",
-                                  style: AlertStyle(
-                                      titleTextAlign: TextAlign.center,
-                                      titleStyle: TextStyle(color: Colors.black54, fontSize: 22),
-                                      buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
-                                  content: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      TextField(
-                                        controller: textEditingEmailController,
-                                        keyboardType: TextInputType.emailAddress,
-                                        decoration: InputDecoration(
-                                          icon: Icon(Icons.email_outlined),
-                                          labelText: 'Email',
-                                        ),
-                                      ),
-                                    ],
+                    InkWell(
+                      onTap: () {
+                        Alert(
+                            context: context,
+                            title: "Informe o email do paciente",
+                            style: AlertStyle(
+                                titleTextAlign: TextAlign.center,
+                                titleStyle: TextStyle(color: Colors.black54, fontSize: 22),
+                                buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
+                            content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                TextField(
+                                  controller: textEditingEmailController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  decoration: InputDecoration(
+                                    icon: Icon(Icons.email_outlined),
+                                    labelText: 'Email',
                                   ),
-                                  buttons: [
-                                    DialogButton(
-                                      onPressed: () async {
-                                        await emailTo();
-                                        Get.back();
-                                        Get.snackbar('Sucesso', 'O aplicativo foi enviado no email informado!',
-                                            colorText: Colors.white,
-                                            backgroundColor: RehabColors().mainColor,
-                                            margin: EdgeInsets.symmetric(vertical: 35, horizontal: 130),
-                                            snackPosition: SnackPosition.TOP);
-                                      },
-                                      child: Text(
-                                        "Salvar",
-                                        style: TextStyle(color: Colors.white, fontSize: 20),
-                                      ),
-                                      color: RehabColors().mainColor,
-                                    )
-                                  ]).show();
-                            },
-                            child: Container(
+                                ),
+                              ],
+                            ),
+                            buttons: [
+                              DialogButton(
+                                onPressed: () async {
+                                  await emailTo();
+                                  Get.back();
+                                  Get.snackbar('Sucesso', 'O aplicativo foi enviado no email informado!',
+                                      colorText: Colors.white,
+                                      backgroundColor: RehabColors().mainColor,
+                                      margin: EdgeInsets.symmetric(vertical: 35, horizontal: 130),
+                                      snackPosition: SnackPosition.TOP);
+                                },
+                                child: Text(
+                                  "Salvar",
+                                  style: TextStyle(color: Colors.white, fontSize: 20),
+                                ),
+                                color: RehabColors().mainColor,
+                              )
+                            ]).show();
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            color: Colors.blue,
+                            boxShadow: [BoxShadow(color: Colors.black12, offset: Offset(3, 3), blurRadius: 8)],
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
                               child: Text(
                                 'Enviar app para o paciente',
                                 style: GoogleFonts.notoSans(
@@ -702,13 +702,13 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                                 ),
                               ),
                             ),
-                          ),
-                          Icon(
-                            Icons.send,
-                            size: 35,
-                            color: Colors.white,
-                          )
-                        ],
+                            Icon(
+                              Icons.send,
+                              size: 35,
+                              color: Colors.white,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -725,7 +725,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
       ],
       subject: 'Aplicativo Rehab.it',
       body:
-          'Olá, Tudo bem?\n\nSegue o link do aplicativo para voce acompanhar a sua reabilitação\nhttps://rehab-it-app.web.app/#/',
+          'Olá, Tudo bem?\n\nSegue o link do aplicativo para voce acompanhar a sua reabilitação\nhttps://rehab-it-app.web.app/#/ \n\n\n\n\n https://drive.google.com/drive/folders/11byU6BWT_ZS94t0hhX6VQCCM10-RG_Zt?usp=sharing',
     );
 
     try {
