@@ -1,62 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rehab_web/ui/controller/auth_controller.dart';
 import 'package:rehab_web/ui/controller/navigation_bar_controller.dart';
 import 'package:rehab_web/ui/home/home_page.dart';
+import 'package:rehab_web/ui/standard_widgets/obx_widget.dart';
 import 'package:rehab_web/utils/colors.dart';
 
 class LoginPage extends StatefulWidget {
-  final Function onSignUpSelected;
-
-  LoginPage({@required this.onSignUpSelected});
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   final NavigationBarController navigationBarController = Get.put(NavigationBarController(), permanent: true);
+  TextEditingController textEditingLoginController = new TextEditingController(text: '');
+  TextEditingController textEditingPasswordController = new TextEditingController(text: '');
+  AuthController authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      body: Container(
-        width: size.width,
-        height: size.height,
-        child: Stack(
-          children: [
-            Row(
+    return RehabObxWidget(
+        authController,
+        Scaffold(
+          body: Container(
+            width: size.width,
+            height: size.height,
+            child: Stack(
               children: [
-                Container(
-                  height: double.infinity,
-                  width: size.width / 2,
-                  color: RehabColors().mainColor,
+                Row(
+                  children: [
+                    Container(
+                      height: double.infinity,
+                      width: size.width / 2,
+                      color: RehabColors().mainColor,
+                    ),
+                    Container(height: double.infinity, width: size.width / 2, color: Colors.white),
+                  ],
                 ),
-                Container(height: double.infinity, width: size.width / 2, color: Colors.white),
-              ],
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.all(32),
-                child: Text(
-                  "Rehab.it",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.all(32),
+                    child: Text(
+                      "Rehab.it",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                AnimatedSwitcher(
+                    duration: Duration(milliseconds: 500),
+                    transitionBuilder: (widget, animation) => ScaleTransition(child: widget, scale: animation),
+                    child: loginCard(context)),
+              ],
             ),
-            AnimatedSwitcher(
-                duration: Duration(milliseconds: 500),
-                transitionBuilder: (widget, animation) => ScaleTransition(child: widget, scale: animation),
-                child: loginCard(context)),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 
   Widget loginCard(BuildContext context) {
@@ -109,9 +112,13 @@ class _LoginPageState extends State<LoginPage> {
                       height: 32,
                     ),
                     TextField(
+                      controller: textEditingLoginController,
+                      onChanged: (value) {
+                        authController.login.value = value;
+                      },
                       decoration: InputDecoration(
-                        hintText: 'Email',
-                        labelText: 'Email',
+                        hintText: 'Login',
+                        labelText: 'Login(cpf)',
                         suffixIcon: Icon(
                           Icons.mail_outline,
                         ),
@@ -122,8 +129,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextField(
                       obscureText: true,
+                      controller: textEditingPasswordController,
                       onChanged: (value) {
                         navigationBarController.password.value = value;
+                        authController.password.value = value;
                       },
                       decoration: InputDecoration(
                         hintText: 'Senha',
@@ -137,8 +146,10 @@ class _LoginPageState extends State<LoginPage> {
                       height: 64,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Get.to(HomePage(), transition: Transition.rightToLeft);
+                      onTap: () async {
+                        await authController.auth();
+
+                        if (authController.status.isSuccess) Get.to(HomePage(), transition: Transition.rightToLeft);
                       },
                       child: Container(
                         height: 50,
@@ -171,45 +182,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(
                       height: 32,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Esqueceu sua senha?",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            widget.onSignUpSelected();
-                          },
-                          child: Row(
-                            children: [
-                              Text(
-                                "clique aqui",
-                                style: TextStyle(
-                                  color: RehabColors().mainColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Icon(
-                                Icons.arrow_forward,
-                                color: RehabColors().mainColor,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),

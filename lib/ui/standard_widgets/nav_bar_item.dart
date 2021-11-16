@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rehab_web/ui/controller/auth_controller.dart';
+import 'package:rehab_web/ui/controller/doctor_controller.dart';
 import 'package:rehab_web/ui/controller/navigation_bar_controller.dart';
-
+import 'package:rehab_web/ui/controller/patient_controller.dart';
+import 'package:rehab_web/ui/home/dashboard.dart';
+import 'package:rehab_web/ui/home/doctors_page.dart';
+import 'package:rehab_web/ui/home/home_page.dart';
+import 'package:rehab_web/ui/new_doctor/new_doctor_page.dart';
+import 'package:rehab_web/ui/new_patient/new_patient_page.dart';
+import 'package:rehab_web/utils/screen_util/flutter_screenutil.dart';
 import 'item_nav_bar_widget.dart';
 
 class NavBar extends StatefulWidget {
@@ -22,53 +30,71 @@ class _NavBarState extends State<NavBar> {
   }
 
   final NavigationBarController navigationBarController = Get.find();
-
+  final AuthController authController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Obx(() => Container(
-          height: 350.0,
-          child: Column(
+          padding: EdgeInsets.symmetric(vertical: 15.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              SizedBox(
+                width: 15.w,
+              ),
               NavBarItem(
+                title: MediaQuery.of(context).size.width < 982 ? '' : 'Inicio',
                 icon: Icons.home,
-                active: selected[0] && navigationBarController.index.value == 0,
+                active: navigationBarController.index.value == 0,
                 touched: () {
+                  final PatientController patientController = Get.find();
                   setState(() {
                     navigationBarController.index.value = 0;
                     select(navigationBarController.index.value);
                   });
+
+                  Get.to(DashBoard(), transition: Transition.fade);
+                  patientController.getPatients();
                 },
               ),
               NavBarItem(
+                title: MediaQuery.of(context).size.width < 982 ? '' : 'Cadastrar paciente',
                 icon: Icons.person_add,
-                active: selected[1] && navigationBarController.index.value == 1,
+                active: navigationBarController.index.value == 1,
                 touched: () {
                   setState(() {
+                    Get.to(NewPatientPage(), transition: Transition.fade);
                     navigationBarController.index.value = 1;
                     select(navigationBarController.index.value);
                   });
                 },
               ),
-              if (navigationBarController.password.value == 'asd123')
+              if (authController.user.value.master == 1)
                 NavBarItem(
+                  title: MediaQuery.of(context).size.width < 982 ? '' : 'Cadastrar funcionario',
                   icon: Icons.medical_services,
-                  active: selected[2] && navigationBarController.index.value == 2,
+                  active: navigationBarController.index.value == 2,
                   touched: () {
                     setState(() {
                       navigationBarController.index.value = 2;
+                      Get.to(NewDoctorPage(), transition: Transition.fade);
                       select(navigationBarController.index.value);
                     });
                   },
                 ),
-              if (navigationBarController.password.value == 'asd123')
+              if (authController.user.value.master == 1)
                 NavBarItem(
+                  title: MediaQuery.of(context).size.width < 982 ? '' : 'Gerenciar funcionarios',
                   icon: Icons.people_alt_sharp,
-                  active: selected[4] && navigationBarController.index.value == 4,
+                  active: navigationBarController.index.value == 4,
                   touched: () {
+                    final DoctorController doctorController = Get.put(DoctorController());
                     setState(() {
                       navigationBarController.index.value = 4;
                       select(navigationBarController.index.value);
                     });
+
+                    Get.to(DoctorPage(), transition: Transition.fade);
+                    doctorController.getDoctors();
                   },
                 ),
             ],

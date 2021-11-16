@@ -3,14 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rehab_web/model/care.dart';
+import 'package:rehab_web/ui/controller/auth_controller.dart';
+import 'package:rehab_web/ui/controller/care_controller.dart';
 
 import 'package:rehab_web/ui/controller/navigation_bar_controller.dart';
 import 'package:rehab_web/ui/data/datas.dart';
 
-import 'package:rehab_web/ui/standard_widgets/search_widget.dart';
 import 'package:rehab_web/ui/standard_widgets/send_button_widget.dart';
 import 'package:rehab_web/utils/colors.dart';
-
+import 'package:rehab_web/utils/date_formatting.dart';
+import 'package:rehab_web/utils/screen_util/flutter_screenutil.dart';
 import 'package:rehab_web/utils/responsive_layout.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -45,156 +48,235 @@ class _LargeChildState extends State<LargeChild> {
   TextEditingController textEditingController = new TextEditingController();
   TextEditingController textEditingConfirmController = new TextEditingController();
   TextEditingController textEditingObservation = new TextEditingController();
+  TextEditingController textEditingData = new TextEditingController();
   final key = GlobalKey<AnimatedListState>();
   final NavigationBarController navigationBarController = Get.find();
+  final CareController careController = Get.find();
   @override
   Widget build(BuildContext context) {
     return ListView(
       shrinkWrap: true,
-      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 25),
+      padding: EdgeInsets.symmetric(horizontal: widthContainer(context), vertical: 25.w),
       children: <Widget>[
         Text("Insiria os medicamentos para o seu paciente",
             textAlign: TextAlign.center,
             style: GoogleFonts.quicksand(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF8591B0))),
         SizedBox(
-          height: 25,
+          height: 25.w,
         ),
-        Container(
-          height: 400,
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(color: Color(0xFFF6F6F6), borderRadius: BorderRadius.circular(40)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Obx(() => Expanded(
-                    child: AnimatedList(
-                      key: key,
-                      initialItemCount: navigationBarController.medicines.length,
-                      itemBuilder: (context, index, animation) => Column(
-                        children: [
-                          buildItem(navigationBarController.medicines[index], index, animation),
-                          if (navigationBarController.medicines[index] == navigationBarController.medicines.last)
-                            Padding(
-                              padding: EdgeInsets.only(top: 30),
-                              child: SendBtn(
-                                'Adicionar',
-                                hasPadding: false,
-                                onTap: () {
-                                  Alert(
-                                      context: context,
-                                      title: "Adicione um medicamento",
-                                      style: AlertStyle(
-                                          titleTextAlign: TextAlign.center,
-                                          titleStyle: TextStyle(color: Colors.black54, fontSize: 22),
-                                          buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
-                                      content: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          TextField(
-                                            controller: textEditingConfirmController,
-                                            decoration: InputDecoration(
-                                              icon: Icon(Icons.medical_services_outlined),
-                                              labelText: 'Nome',
-                                            ),
-                                          ),
-                                          TextField(
-                                            controller: textEditingController,
-                                            decoration: InputDecoration(
-                                              icon: Icon(Icons.history),
-                                              labelText: 'Periodicidade',
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      buttons: [
-                                        DialogButton(
-                                          onPressed: () {
-                                            Get.back();
-                                            insertItem(
-                                                index,
-                                                new Item(textEditingConfirmController.text,
-                                                    value: textEditingController.text));
-                                          },
-                                          child: Text(
-                                            "Salvar",
-                                            style: TextStyle(color: Colors.white, fontSize: 20),
-                                          ),
-                                          color: RehabColors().mainColor,
-                                        )
-                                      ]).show();
-                                },
+        Obx(
+          () => Container(
+            height: (110.w * careController.listMedicines.length) + 175.w,
+            padding: EdgeInsets.all(20.w),
+            decoration: BoxDecoration(color: Color(0xFFF6F6F6), borderRadius: BorderRadius.circular(40)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Obx(() => Expanded(
+                      child: AnimatedList(
+                        key: key,
+                        initialItemCount: careController.listMedicines.length,
+                        itemBuilder: (context, index, animation) => Column(
+                          children: [
+                            buildItem(careController.listMedicines[index], index, animation),
+                          ],
+                        ),
+                      ),
+                    )),
+                Padding(
+                  padding: EdgeInsets.only(top: 30.w, bottom: 30.w),
+                  child: SendBtn(
+                    'Adicionar',
+                    width: 400.w,
+                    hasPadding: false,
+                    onTap: () {
+                      Alert(
+                          context: context,
+                          title: "Adicione um medicamento",
+                          style: AlertStyle(
+                              titleTextAlign: TextAlign.center,
+                              titleStyle: TextStyle(color: Colors.black54, fontSize: 22),
+                              buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              TextField(
+                                controller: textEditingConfirmController,
+                                decoration: InputDecoration(
+                                  icon: Icon(Icons.medical_services_outlined),
+                                  labelText: 'Nome',
+                                ),
                               ),
+                              TextField(
+                                controller: textEditingController,
+                                decoration: InputDecoration(
+                                  icon: Icon(Icons.history),
+                                  labelText: 'Periodicidade',
+                                ),
+                              ),
+                              TextField(
+                                controller: textEditingData,
+                                decoration: InputDecoration(
+                                  icon: Icon(Icons.history),
+                                  labelText: 'Duração',
+                                ),
+                              ),
+                              TextField(
+                                controller: textEditingObservation,
+                                maxLines: 5,
+                                keyboardType: TextInputType.multiline,
+                                style: TextStyle(color: Colors.black38, fontSize: 18),
+                                decoration: InputDecoration(
+                                  labelText: 'Observações',
+                                  icon: Icon(Icons.wysiwyg),
+                                  labelStyle: TextStyle(color: Colors.black38, fontSize: 18),
+                                ),
+                              ),
+                            ],
+                          ),
+                          buttons: [
+                            DialogButton(
+                              onPressed: () {
+                                Get.back();
+                                insertItem(careController.listMedicines.length,
+                                    new Item(textEditingConfirmController.text, value: textEditingController.text));
+                              },
+                              child: Text(
+                                "Salvar",
+                                style: TextStyle(color: Colors.white, fontSize: 20),
+                              ),
+                              color: RehabColors().mainColor,
                             )
-                        ],
-                      ),
-                    ),
-                  )),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 35,
-        ),
-        SendBtn(
-          'Observações',
-          hasPadding: false,
-          onTap: () {
-            Alert(
-                context: context,
-                title: "Adicione observações sobre os medicamentos",
-                style: AlertStyle(
-                    titleTextAlign: TextAlign.center,
-                    titleStyle: TextStyle(color: Colors.black54, fontSize: 25),
-                    buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    TextField(
-                      controller: textEditingObservation,
-                      maxLines: 7,
-                      keyboardType: TextInputType.multiline,
-                      style: TextStyle(color: Colors.black38, fontSize: 18),
-                      decoration: InputDecoration(
-                        labelText: 'Observações',
-                        labelStyle: TextStyle(color: Colors.black38, fontSize: 18),
-                      ),
-                    ),
-                  ],
-                ),
-                buttons: [
-                  DialogButton(
-                    onPressed: () {
-                      Get.back();
+                          ]).show();
                     },
-                    child: Text(
-                      "Salvar",
-                      style: TextStyle(color: Colors.white, fontSize: 25),
-                    ),
-                    color: RehabColors().mainColorHover,
-                  )
-                ]).show();
-          },
-        ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        )
       ],
     );
   }
 
-  void removeItem(int index) {
-    final item = navigationBarController.medicines.removeAt(index);
-    key.currentState.removeItem(
-      index,
-      (context, animation) => buildItem(item, index, animation),
-    );
+  double widthContainer(BuildContext context) {
+    if (MediaQuery.of(context).size.width < 1200) return 150.w;
+    if (MediaQuery.of(context).size.width < 1400) return 350.w;
+    if (MediaQuery.of(context).size.width < 1538) return 400.w;
+
+    return 550.w;
   }
 
-  void insertItem(int index, Item item) {
-    navigationBarController.medicines.insert(0, item);
+  void removeItem(int index) {
+    Alert(
+        context: context,
+        title: "Tem certeza que deseja excluir?",
+        style: AlertStyle(
+            titleTextAlign: TextAlign.center,
+            titleStyle: TextStyle(color: Colors.black54, fontSize: 22),
+            buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
+        buttons: [
+          DialogButton(
+            onPressed: () async {
+              final item = careController.listMedicines[index];
+              key.currentState.removeItem(
+                index,
+                (context, animation) => buildItem(item, index, animation),
+              );
+              await careController.deleteCare(careController.listMedicines[index].id);
+              await careController.getCares(careController.listMedicines[index].pacienteCpf);
+              Get.back();
+            },
+            child: Text(
+              "Excluir",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            color: Colors.red,
+          ),
+          DialogButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: Text(
+              "Cancelar",
+              style: TextStyle(color: RehabColors().mainColor, fontSize: 20),
+            ),
+            color: Colors.white,
+          ),
+        ]).show();
+  }
+
+  void insertItem(int index, Item item) async {
+    final AuthController authController = Get.find();
+    final NavigationBarController navigationBarController = Get.find();
+    await careController.createCare(Care((b) => b
+      ..descricao = textEditingConfirmController.text
+      ..quantidade = textEditingController.text
+      ..observacao = textEditingObservation.text
+      ..tpCuidados = 2
+      ..dtPublicacao = dateAsDBFormat(DateTime.now())
+      ..especialistaCpf = authController.user.value.cpf
+      ..pacienteCpf = navigationBarController.patient.value.cpf
+      ..dtDuracao = dateAsDBFormat(new DateTime(DateTime.now().year, DateTime.now().month,
+          DateTime.now().day + int.tryParse(textEditingData.text), 0, 0, 0, 0, 0))));
+    await careController.getCares(navigationBarController.patient.value.cpf);
     key.currentState.insertItem(index);
   }
 
   Widget buildItem(item, int index, Animation<double> animation) => ItemWidget(
         item: item,
         animation: animation,
+        onTap: () {
+          Alert(
+            context: context,
+            title: "Adicione um medicamento",
+            style: AlertStyle(
+                titleTextAlign: TextAlign.center,
+                titleStyle: TextStyle(color: Colors.black54, fontSize: 22),
+                buttonAreaPadding: EdgeInsets.symmetric(horizontal: 40, vertical: 25)),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                TextField(
+                  controller: textEditingConfirmController,
+                  enabled: false,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.medical_services_outlined),
+                    labelText: 'Nome',
+                  ),
+                ),
+                TextField(
+                  controller: textEditingController,
+                  enabled: false,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.history),
+                    labelText: 'Periodicidade',
+                  ),
+                ),
+                TextField(
+                  controller: textEditingData,
+                  enabled: false,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.history),
+                    labelText: 'Duração',
+                  ),
+                ),
+                TextField(
+                  controller: textEditingObservation,
+                  enabled: false,
+                  maxLines: 5,
+                  keyboardType: TextInputType.multiline,
+                  style: TextStyle(color: Colors.black38, fontSize: 18),
+                  decoration: InputDecoration(
+                    labelText: 'Observações',
+                    icon: Icon(Icons.wysiwyg),
+                    labelStyle: TextStyle(color: Colors.black38, fontSize: 18),
+                  ),
+                ),
+              ],
+            ),
+          ).show();
+        },
         onClicked: () => removeItem(index),
       );
 }

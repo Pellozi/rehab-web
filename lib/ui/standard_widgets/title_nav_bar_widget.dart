@@ -9,12 +9,15 @@ class TitleNavigationBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(
+              width: 15,
+            ),
             Text(
               'R',
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
-                fontSize: 16.0,
+                fontSize: 20.0,
               ),
             ),
             Text(
@@ -22,7 +25,7 @@ class TitleNavigationBar extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w300,
                 color: Colors.white70,
-                fontSize: 16.0,
+                fontSize: 20.0,
               ),
             ),
           ],

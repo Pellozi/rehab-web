@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rehab_web/ui/login/login_page.dart';
 import 'package:rehab_web/ui/standard_widgets/item_nav_bar_widget.dart';
 import 'package:rehab_web/ui/standard_widgets/nav_bar_item.dart';
 import 'package:rehab_web/ui/standard_widgets/title_nav_bar_widget.dart';
 import 'package:rehab_web/utils/colors.dart';
-
+import 'package:rehab_web/utils/screen_util/flutter_screenutil.dart';
 import 'controller/navigation_bar_controller.dart';
 
 class NavigationBar extends StatefulWidget {
@@ -19,26 +20,24 @@ class _NavigationBarState extends State<NavigationBar> {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        height: MediaQuery.of(context).size.height,
-        width: 100.0,
+        height: 70.w,
         color: RehabColors().mainColor,
-        child: Stack(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TitleNavigationBar(),
             Align(
               alignment: Alignment.center,
               child: NavBar(),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: NavBarItem(
-                touched: () {
-                  navigationBarController.index.value = 0;
-                  Get.back();
-                },
-                icon: Icons.logout,
-                active: false,
-              ),
+            NavBarItem(
+              title: 'Sair',
+              touched: () {
+                navigationBarController.index.value = 0;
+                Get.offAll(LoginPage());
+              },
+              icon: Icons.logout,
+              active: false,
             ),
           ],
         ),

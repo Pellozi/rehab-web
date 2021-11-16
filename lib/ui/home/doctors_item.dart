@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rehab_web/ui/controller/doctor_controller.dart';
 import 'package:rehab_web/ui/data/datas.dart';
+import 'package:rehab_web/utils/colors.dart';
+import 'package:rehab_web/utils/screen_util/flutter_screenutil.dart';
 
 class DoctorItem extends StatefulWidget {
-  final Item doctor;
+  final DoctorModel doctor;
   final Color color;
   final IconData icon;
   final Animation animation;
@@ -41,11 +44,11 @@ class _DoctorItemState extends State<DoctorItem> {
         onTap: widget.onClickItem,
         child: AnimatedContainer(
           duration: Duration(milliseconds: 275),
-          margin: EdgeInsets.only(bottom: 10.0, right: 15.0),
-          padding: EdgeInsets.all(10.0),
+          margin: EdgeInsets.only(bottom: 10.0.w, right: 15.0.w),
+          padding: EdgeInsets.all(10.0.w),
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(10.0.w),
               boxShadow: hovered
                   ? [
                       BoxShadow(
@@ -67,8 +70,8 @@ class _DoctorItemState extends State<DoctorItem> {
                           width: 15.0,
                         ),
                         Container(
-                          height: 38.0,
-                          width: 38.0,
+                          height: 38.0.w,
+                          width: 38.0.w,
                           decoration: BoxDecoration(
                             color: widget.color.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(5.0),
@@ -85,7 +88,7 @@ class _DoctorItemState extends State<DoctorItem> {
                           width: 15.0,
                         ),
                         Text(
-                          widget.doctor.description,
+                          widget.doctor.nome,
                           style: GoogleFonts.quicksand(
                             fontWeight: FontWeight.bold,
                             fontSize: 16.0,
@@ -94,12 +97,19 @@ class _DoctorItemState extends State<DoctorItem> {
                       ],
                     ),
                     IconButton(
-                      icon: Icon(Icons.remove_circle, color: Colors.red, size: 32),
+                      icon: Icon(Icons.remove_circle, color: Colors.red, size: 32.w),
                       onPressed: widget.onClicked,
                     ),
                   ],
                 ),
               ),
+              SizedBox(
+                height: 15.w,
+              ),
+              Divider(
+                height: 1.w,
+                color: RehabColors().grayColor,
+              )
             ],
           ),
         ),

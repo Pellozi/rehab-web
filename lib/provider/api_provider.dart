@@ -6,7 +6,7 @@ import 'package:get_storage/get_storage.dart';
 const PRINT_DIO = false;
 
 class ApiProvider {
-  final String apiBaseUrl = "ec2-3-137-144-122.us-east-2.compute.amazonaws.com:8080/";
+  final String apiBaseUrl = "https://rehabit-api.herokuapp.com/";
   BaseOptions options = BaseOptions(
     receiveTimeout: API_TIMEOUT,
     connectTimeout: API_TIMEOUT,
@@ -33,6 +33,10 @@ class ApiProvider {
       onRequest: (RequestOptions op, request) {},
     ));
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (RequestOptions options, request) {
+      options.headers['Access-Control-Allow-Origin'] = '*';
+      options.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS';
+      options.headers['Access-Control-Allow-Headers'] = 'X-PINGOTHER, Content-Type';
+      options.headers['Access-Control-Max-Age'] = 86400;
       options.connectTimeout = API_TIMEOUT;
       if (token != null) {
         options.headers['Authorization'] = 'Bearer $token';
