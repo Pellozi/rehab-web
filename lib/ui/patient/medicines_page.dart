@@ -58,7 +58,7 @@ class _LargeChildState extends State<LargeChild> {
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(horizontal: widthContainer(context), vertical: 25.w),
       children: <Widget>[
-        Text("Insiria os medicamentos para o seu paciente",
+        Text("Insira os medicamentos para o seu paciente",
             textAlign: TextAlign.center,
             style: GoogleFonts.quicksand(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF8591B0))),
         SizedBox(
@@ -258,7 +258,7 @@ class _LargeChildState extends State<LargeChild> {
                   enabled: false,
                   decoration: InputDecoration(
                     icon: Icon(Icons.history),
-                    labelText: 'Duração',
+                    labelText: 'Duração(dias)',
                   ),
                 ),
                 TextField(

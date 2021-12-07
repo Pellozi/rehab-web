@@ -31,10 +31,7 @@ class AuthController extends BaseController {
       final response = await dio.post('${ApiProvider.instance.apiBaseUrl}oauth/token',
           data: formData,
           options: api.Options(
-            headers: {
-              'authorization': 'Basic cmVoYWJpdDpxYS40NzM2',
-              'Access-Control-Allow-Origin' : '*'
-            },
+            headers: {'authorization': 'Basic cmVoYWJpdDpxYS40NzM2', 'Access-Control-Allow-Origin': '*'},
           ));
 
       print(response.data);
@@ -61,10 +58,7 @@ class AuthController extends BaseController {
 
       final response = await dio.get('${ApiProvider.instance.apiBaseUrl}especialista/getByCpf?cpf=$cpf',
           options: api.Options(
-            headers: {
-              'authorization': 'Bearer ${ApiProvider.instance.token}',
-              'Access-Control-Allow-Origin' : '*'
-            },
+            headers: {'authorization': 'Bearer ${ApiProvider.instance.token}', 'Access-Control-Allow-Origin': '*'},
           ));
 
       User userResponse = User.fromJson(response.data);

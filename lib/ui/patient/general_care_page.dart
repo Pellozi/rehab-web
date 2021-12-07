@@ -47,7 +47,7 @@ class _LargeChildState extends State<LargeChild> {
         SizedBox(
           height: 25.w,
         ),
-        Text("Insiria os cuidados para o seu paciente",
+        Text("Insira os cuidados para o seu paciente",
             textAlign: TextAlign.center,
             style: GoogleFonts.quicksand(fontSize: 30.w, fontWeight: FontWeight.bold, color: Color(0xFF8591B0))),
         SizedBox(
@@ -80,7 +80,7 @@ class _LargeChildState extends State<LargeChild> {
                       onTap: () {
                         Alert(
                             context: context,
-                            title: "Adicione um medicamento",
+                            title: "Adicione um cuidado",
                             style: AlertStyle(
                                 titleTextAlign: TextAlign.center,
                                 titleStyle: TextStyle(color: Colors.black54, fontSize: 22.w),
@@ -99,7 +99,7 @@ class _LargeChildState extends State<LargeChild> {
                                   controller: textEditingData,
                                   decoration: InputDecoration(
                                     icon: Icon(Icons.history),
-                                    labelText: 'Duração',
+                                    labelText: 'Duração(dias)',
                                   ),
                                 ),
                               ],

@@ -56,9 +56,9 @@ class _DashBoardState extends State<DashBoard> {
                             patientController.startLoading();
                             if (searchController.text != '' &&
                                 patientController.listPatient
-                                    .any((p0) => p0.nome.contains(searchController.text.trim()))) {
+                                    .any((p0) => p0.nome.contains(searchController.text.removeAllWhitespace))) {
                               patientController.listPatient.value = patientController.listPatient
-                                  .where((p0) => p0.nome.contains(searchController.text.trim()))
+                                  .where((p0) => p0.nome.contains(searchController.text.removeAllWhitespace))
                                   .toList();
                               patientController.finishLoading();
                               return;

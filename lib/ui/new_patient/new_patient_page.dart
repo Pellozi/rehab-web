@@ -127,7 +127,7 @@ class _LargeChildState extends State<LargeChild> {
                   child: TextFieldWidget('Tempo de reabilitação', dataController,
                       hasPadding: false,
                       fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
-                      labelTitle: 'Tempo de reabilitação',
+                      labelTitle: 'Tempo de reabilitação(dias)',
                       hasAllPadding: false),
                 ),
                 Row(

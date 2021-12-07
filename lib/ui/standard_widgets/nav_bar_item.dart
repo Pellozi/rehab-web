@@ -56,18 +56,19 @@ class _NavBarState extends State<NavBar> {
                   patientController.getPatients();
                 },
               ),
-              NavBarItem(
-                title: MediaQuery.of(context).size.width < 982 ? '' : 'Cadastrar paciente',
-                icon: Icons.person_add,
-                active: navigationBarController.index.value == 1,
-                touched: () {
-                  setState(() {
-                    Get.to(NewPatientPage(), transition: Transition.fade);
-                    navigationBarController.index.value = 1;
-                    select(navigationBarController.index.value);
-                  });
-                },
-              ),
+              if (authController.user.value.master == 1 || authController.user.value.cdPaciente == 1)
+                NavBarItem(
+                  title: MediaQuery.of(context).size.width < 982 ? '' : 'Cadastrar paciente',
+                  icon: Icons.person_add,
+                  active: navigationBarController.index.value == 1,
+                  touched: () {
+                    setState(() {
+                      Get.to(NewPatientPage(), transition: Transition.fade);
+                      navigationBarController.index.value = 1;
+                      select(navigationBarController.index.value);
+                    });
+                  },
+                ),
               if (authController.user.value.master == 1)
                 NavBarItem(
                   title: MediaQuery.of(context).size.width < 982 ? '' : 'Cadastrar funcionario',

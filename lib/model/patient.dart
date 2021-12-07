@@ -31,6 +31,8 @@ abstract class PatientResponse implements Built<PatientResponse, PatientResponse
   int get nrDias;
   @nullable
   String get respCadastro;
+  @nullable
+  bool get habilitado;
   PatientResponse._();
 
   factory PatientResponse([updates(PatientResponseBuilder b)]) = _$PatientResponse;

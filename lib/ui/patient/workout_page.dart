@@ -51,7 +51,7 @@ class _LargeChildState extends State<LargeChild> {
         SizedBox(
           height: 25.w,
         ),
-        Text("Insiria os exercícios físicos para o paciente",
+        Text("Insira os exercícios físicos para o paciente",
             textAlign: TextAlign.center,
             style: GoogleFonts.quicksand(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF8591B0))),
         SizedBox(
@@ -204,7 +204,7 @@ class _LargeChildState extends State<LargeChild> {
       ..descricao = textEditingConfirmController.text
       ..exercicio = textEditingObservation.text
       ..realizado = false
-      ..perEsforco = '1'
+      ..perEsforco = '0'
       ..quantidade = textEditingController.text
       ..dtPublicacao = dateAsDBFormat(DateTime.now())
       ..especialistaCpf = authController.user.value.cpf
@@ -214,9 +214,8 @@ class _LargeChildState extends State<LargeChild> {
           DateTime.now().day + int.tryParse(textEditingData.text), 0, 0, 0, 0, 0))));
 
     await careController.getCareExercise(navigationBarController.patient.value.cpf);
-    Future.delayed(Duration(milliseconds: 500), () {
-      key.currentState.insertItem(index);
-    });
+
+    key.currentState.insertItem(index);
   }
 
   Widget buildItem(CareExerciseModel item, int index, Animation<double> animation) => ItemExerciseWidget(

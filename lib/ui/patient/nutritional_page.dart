@@ -48,7 +48,7 @@ class _LargeChildState extends State<LargeChild> {
         SizedBox(
           height: 25,
         ),
-        Text("Insiria os alimentos para a dieta do paciente",
+        Text("Insira os alimentos para a dieta do paciente",
             textAlign: TextAlign.center,
             style: GoogleFonts.quicksand(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF8591B0))),
         SizedBox(
@@ -111,7 +111,7 @@ class _LargeChildState extends State<LargeChild> {
                                   controller: textEditingData,
                                   decoration: InputDecoration(
                                     icon: Icon(Icons.history),
-                                    labelText: 'Duração',
+                                    labelText: 'Duração(dias)',
                                   ),
                                 ),
                                 TextField(

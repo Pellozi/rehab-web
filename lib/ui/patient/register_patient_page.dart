@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mailto/mailto.dart';
 import 'package:rehab_web/model/patient.dart';
 import 'package:rehab_web/ui/controller/auth_controller.dart';
+import 'package:rehab_web/ui/controller/care_controller.dart';
 import 'package:rehab_web/ui/controller/checkin_controller.dart';
 import 'package:rehab_web/ui/controller/navigation_bar_controller.dart';
 import 'package:rehab_web/ui/controller/patient_controller.dart';
@@ -25,6 +26,7 @@ class RegisterPatientPage extends StatefulWidget {
 class _RegisterPatientPageState extends State<RegisterPatientPage> {
   TextEditingController textEditingEmailController = new TextEditingController();
   final NavigationBarController navigationBarController = Get.find();
+  final CareController careController = Get.find();
   final CheckInController checkInController = Get.put(CheckInController());
   final TextEditingController nameController = new TextEditingController(text: '');
   final TextEditingController cpfController = new TextEditingController(text: '');
@@ -41,6 +43,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
 
   @override
   void initState() {
+    print(navigationBarController.patient.value.cpf);
     init();
     super.initState();
   }
@@ -103,7 +106,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                                   values: [getPressaoAsList(), getBemAsList(), getGlicemiaAsList()],
                                   colors: [Colors.blue, Colors.red, Colors.lightGreenAccent],
                                   dates: getDatesAsList(),
-                                  titles: ["Batimentos", "Temperatura", "Saturação"]),
+                                  titles: ["Pressão arterial", "Temperatura", "Saturação"]),
                             ),
                             Column(
                               children: [
@@ -177,7 +180,6 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                                         buttons: [
                                           DialogButton(
                                             onPressed: () async {
-                                              final NavigationBarController navigationBarController = Get.find();
                                               final AuthController authController = Get.find();
                                               await patientController.createPatient(PatientResponse((b) => b
                                                 ..cpf = navigationBarController.patient.value.cpf
@@ -199,21 +201,21 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                                                 ..fumante = false
                                                 ..respCadastro = authController.user.value.cpf
                                                 ..diabetico = false
+                                                ..habilitado = navigationBarController.patient.value.habilitado
                                                 ..nrDias = dataController.text == ''
                                                     ? navigationBarController.patient.value.nrDias
                                                     : int.tryParse(dataController.text)));
+                                              Get.back();
                                               if (patientController.status.isSuccess) {
                                                 await patientController.getPatients();
                                                 navigationBarController.patient.value = patientController.listPatient
                                                     .firstWhere((element) =>
                                                         element.cpf == navigationBarController.patient.value.cpf);
-                                                Get.snackbar('Sucesso', 'Paciente cadastrado!',
+                                                Get.snackbar('Sucesso', 'Paciente editado!',
                                                     colorText: Colors.white,
                                                     backgroundColor: RehabColors().mainColor,
                                                     margin: EdgeInsets.symmetric(vertical: 35, horizontal: 130),
                                                     snackPosition: SnackPosition.TOP);
-                                                navigationBarController.index.value = 0;
-                                                Get.back();
                                               }
                                             },
                                             child: Text(
@@ -408,6 +410,17 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                                     model: checkInController.freqCardiacaPre[index]);
                               },
                             )),
+                        Obx(() => ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: careController.listExerciseEsforco.length,
+                              itemBuilder: (context, index) {
+                                return SharedFilesItemIncidentEsforco(
+                                    icon: Icons.fact_check,
+                                    color: Colors.lime,
+                                    model: careController.listExerciseEsforco[index]);
+                              },
+                            )),
                       ],
                     ),
                   ),
@@ -415,7 +428,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
               ),
             if (!navigationBarController.patient.value.habilitado)
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 50.w, horizontal: 250.w),
+                padding: EdgeInsets.symmetric(vertical: 50.w, horizontal: 350.w),
                 child: Column(
                   children: [
                     GestureDetector(
@@ -508,20 +521,21 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                                     ..fumante = false
                                     ..respCadastro = authController.user.value.cpf
                                     ..diabetico = false
+                                    ..habilitado = navigationBarController.patient.value.habilitado
                                     ..nrDias = dataController.text == ''
                                         ? navigationBarController.patient.value.nrDias
                                         : int.tryParse(dataController.text)));
+                                  Get.back();
                                   if (patientController.status.isSuccess) {
                                     await patientController.getPatients();
                                     navigationBarController.patient.value = patientController.listPatient.firstWhere(
                                         (element) => element.cpf == navigationBarController.patient.value.cpf);
-                                    Get.snackbar('Sucesso', 'Paciente cadastrado!',
+                                    Get.snackbar('Sucesso', 'Paciente editado!',
                                         colorText: Colors.white,
                                         backgroundColor: RehabColors().mainColor,
                                         margin: EdgeInsets.symmetric(vertical: 35, horizontal: 130),
                                         snackPosition: SnackPosition.TOP);
                                     navigationBarController.index.value = 0;
-                                    Get.back();
                                   }
                                 },
                                 child: Text(

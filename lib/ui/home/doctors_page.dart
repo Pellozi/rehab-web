@@ -135,7 +135,6 @@ class _DoctorPageState extends State<DoctorPage> {
         TextEditingController cpfController = new TextEditingController(text: doctorController.listDoctors[index].cpf);
         TextEditingController passwordController =
             new TextEditingController(text: doctorController.listDoctors[index].password);
-        _selected = doctorController.listDoctors[index].tpEspecialista;
         TextEditingController emailController =
             new TextEditingController(text: doctorController.listDoctors[index].email);
         Alert(
@@ -322,7 +321,7 @@ class _DoctorPageState extends State<DoctorPage> {
                     ..cpf = cpfController.text
                     ..email = emailController.text
                     ..nome = nameController.text
-                    ..master = 0
+                    ..master = item.master
                     ..password = passwordController.text
                     ..cdDieta = isCheckedNutritional ? 1 : 0
                     ..cdExercicio = isCheckedWorkout ? 1 : 0

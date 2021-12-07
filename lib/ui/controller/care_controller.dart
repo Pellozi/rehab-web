@@ -16,6 +16,7 @@ class CareController extends BaseController {
   var listGeneral = <CareModel>[].obs;
   var listNutritional = <CareModel>[].obs;
   var listExercise = <CareExerciseModel>[].obs;
+  var listExerciseEsforco = <CareExerciseModel>[].obs;
   @override
   void onInit() {
     change([], status: RxStatus.success());
@@ -54,6 +55,7 @@ class CareController extends BaseController {
       final List<CareExerciseModel> cares =
           responseMap.map<CareExerciseModel>((m) => CareExerciseModel.fromMap(Map<String, dynamic>.from(m))).toList();
       listExercise.value = cares;
+      listExerciseEsforco.value = listExercise.where((p0) => p0.perEsforco != 0).toList();
       change([], status: RxStatus.success());
     } catch (error) {
       change([], status: RxStatus.success());

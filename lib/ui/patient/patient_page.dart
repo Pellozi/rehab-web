@@ -131,6 +131,9 @@ class _PatientPageState extends State<PatientPage> {
                                                 authController.user.value.cpf);
                                             if (chatController.status.isSuccess) {
                                               FocusScope.of(context).requestFocus(new FocusNode());
+                                              setState(() {
+                                                _textEditingController.text = '';
+                                              });
                                             }
                                           },
                                           cursorColor: Colors.black38.withOpacity(0.7),
@@ -162,6 +165,9 @@ class _PatientPageState extends State<PatientPage> {
                                                 authController.user.value.cpf);
                                             if (chatController.status.isSuccess) {
                                               FocusScope.of(context).requestFocus(new FocusNode());
+                                              setState(() {
+                                                _textEditingController.text = '';
+                                              });
                                             }
                                           },
                                           child: Padding(
@@ -266,27 +272,29 @@ class _PatientPageState extends State<PatientPage> {
                   )),
                 ),
               ),
-              SizedBox(width: 50),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    _pageIndex = 1;
-                    _pageController.jumpToPage(1);
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 35, vertical: 12),
-                  decoration: BoxDecoration(
-                      color: _pageIndex == 1 ? RehabColors().mainColor : Colors.black12,
-                      borderRadius: BorderRadius.circular(100)),
-                  child: Center(
-                      child: Text(
-                    'Medicamentos',
-                    style: GoogleFonts.notoSans(
-                        color: _pageIndex == 1 ? Colors.white : RehabColors().grayColor, fontSize: 25),
-                  )),
+              if (authController.user.value.master == 1 || authController.user.value.cdMedicamento == 1) ...[
+                SizedBox(width: 50),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _pageIndex = 1;
+                      _pageController.jumpToPage(1);
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 12),
+                    decoration: BoxDecoration(
+                        color: _pageIndex == 1 ? RehabColors().mainColor : Colors.black12,
+                        borderRadius: BorderRadius.circular(100)),
+                    child: Center(
+                        child: Text(
+                      'Medicamentos',
+                      style: GoogleFonts.notoSans(
+                          color: _pageIndex == 1 ? Colors.white : RehabColors().grayColor, fontSize: 25),
+                    )),
+                  ),
                 ),
-              ),
+              ],
               SizedBox(
                 width: 50,
               ),
@@ -310,52 +318,56 @@ class _PatientPageState extends State<PatientPage> {
                   )),
                 ),
               ),
-              SizedBox(
-                width: 50,
-              ),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    _pageIndex = 3;
-                    _pageController.jumpToPage(3);
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 35, vertical: 12),
-                  decoration: BoxDecoration(
-                      color: _pageIndex == 3 ? RehabColors().mainColor : Colors.black12,
-                      borderRadius: BorderRadius.circular(100)),
-                  child: Center(
-                      child: Text(
-                    'Dieta e nutrição',
-                    style: GoogleFonts.notoSans(
-                        color: _pageIndex == 3 ? Colors.white : RehabColors().grayColor, fontSize: 25),
-                  )),
+              if (authController.user.value.master == 1 || authController.user.value.cdDieta == 1) ...[
+                SizedBox(
+                  width: 50,
                 ),
-              ),
-              SizedBox(
-                width: 50,
-              ),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    _pageIndex = 4;
-                    _pageController.jumpToPage(4);
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 35, vertical: 12),
-                  decoration: BoxDecoration(
-                      color: _pageIndex == 4 ? RehabColors().mainColor : Colors.black12,
-                      borderRadius: BorderRadius.circular(100)),
-                  child: Center(
-                      child: Text(
-                    'Atividades físicas',
-                    style: GoogleFonts.notoSans(
-                        color: _pageIndex == 4 ? Colors.white : RehabColors().grayColor, fontSize: 25),
-                  )),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _pageIndex = 3;
+                      _pageController.jumpToPage(3);
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 12),
+                    decoration: BoxDecoration(
+                        color: _pageIndex == 3 ? RehabColors().mainColor : Colors.black12,
+                        borderRadius: BorderRadius.circular(100)),
+                    child: Center(
+                        child: Text(
+                      'Dieta e nutrição',
+                      style: GoogleFonts.notoSans(
+                          color: _pageIndex == 3 ? Colors.white : RehabColors().grayColor, fontSize: 25),
+                    )),
+                  ),
                 ),
-              ),
+              ],
+              if (authController.user.value.master == 1 || authController.user.value.cdExercicio == 1) ...[
+                SizedBox(
+                  width: 50,
+                ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _pageIndex = 4;
+                      _pageController.jumpToPage(4);
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 12),
+                    decoration: BoxDecoration(
+                        color: _pageIndex == 4 ? RehabColors().mainColor : Colors.black12,
+                        borderRadius: BorderRadius.circular(100)),
+                    child: Center(
+                        child: Text(
+                      'Atividades físicas',
+                      style: GoogleFonts.notoSans(
+                          color: _pageIndex == 4 ? Colors.white : RehabColors().grayColor, fontSize: 25),
+                    )),
+                  ),
+                )
+              ],
             ],
           ),
         ),
@@ -383,22 +395,6 @@ class Bubble extends StatelessWidget {
             mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
             crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.end,
             children: <Widget>[
-              if (!isMe)
-                CircleAvatar(
-                  radius: 15.r,
-                  backgroundColor: Colors.black12,
-                  child: ClipOval(
-                      child: Image(
-                    image: AssetImage('assets/images/medical-team.png'),
-                  )),
-                ),
-              if (chat.visualizado)
-                Image.asset(
-                  "assets/images/visualized.png",
-                  color: RehabColors().mainColor,
-                  height: 9.w,
-                  width: 17.w,
-                ),
               SizedBox(
                 width: isMe ? 6.w : 10.w,
               ),

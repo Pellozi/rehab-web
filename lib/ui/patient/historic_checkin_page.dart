@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rehab_web/ui/controller/care_controller.dart';
 import 'package:rehab_web/ui/controller/checkin_controller.dart';
 import 'package:rehab_web/utils/date_formatting.dart';
 import 'package:rehab_web/utils/screen_util/flutter_screenutil.dart';
@@ -313,7 +314,7 @@ class SharedFilesItemIncidentPressao extends StatelessWidget {
                       width: 15.0.w,
                     ),
                     Text(
-                      'Batimentos',
+                      'Pressão arterial',
                       style: GoogleFonts.quicksand(
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0.w,
@@ -835,6 +836,105 @@ class SharedFilesItemIncidentBemEstar extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 30.0),
                       child: Text(
                         dateAsStringLongMonth(DateTime.parse(model.data)),
+                        style: GoogleFonts.quicksand(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0.w,
+                          color: Colors.black45,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SharedFilesItemIncidentEsforco extends StatelessWidget {
+  final Color color;
+  final CareExerciseModel model;
+  final IconData icon;
+  SharedFilesItemIncidentEsforco({this.color, this.model, this.icon});
+  bool hovered = false;
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 275),
+      margin: EdgeInsets.only(bottom: 10.0, right: 15.0),
+      padding: EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: hovered
+              ? [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 13.0,
+                    spreadRadius: 0.0,
+                  ),
+                ]
+              : []),
+      child: Column(
+        children: [
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 15.0.w,
+                    ),
+                    Container(
+                      height: 38.0.w,
+                      width: 38.0.w,
+                      decoration: BoxDecoration(
+                        color: color.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          icon,
+                          color: color,
+                          size: 25.0.w,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 15.0.w,
+                    ),
+                    Text(
+                      'Esforço no exercicio: ${model.descricao}',
+                      style: GoogleFonts.quicksand(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0.w,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (model.perEsforco != null)
+                      Padding(
+                        padding: EdgeInsets.zero,
+                        child: Text(
+                          model.perEsforco.toString(),
+                          style: GoogleFonts.quicksand(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0.w,
+                            color: Colors.black45,
+                          ),
+                        ),
+                      ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Text(
+                        dateAsStringLongMonth(DateTime.parse(model.dtPublicacao)),
                         style: GoogleFonts.quicksand(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0.w,
