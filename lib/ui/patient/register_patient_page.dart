@@ -739,7 +739,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
       ],
       subject: 'Aplicativo Rehab.it',
       body:
-          'Olá, Tudo bem?\n\nSegue o link do aplicativo para voce acompanhar a sua reabilitação\nhttps://rehab-it-app.web.app/#/ \n\n\n\n\n https://drive.google.com/drive/folders/11byU6BWT_ZS94t0hhX6VQCCM10-RG_Zt?usp=sharing',
+          'Olá, Tudo bem?\n\nSegue o link do aplicativo para voce acompanhar a sua reabilitação\n\n\n\n https://drive.google.com/drive/folders/11byU6BWT_ZS94t0hhX6VQCCM10-RG_Zt?usp=sharing',
     );
 
     try {
