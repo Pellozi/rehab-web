@@ -30,7 +30,7 @@ class NewPatientPage extends StatelessWidget {
         patientController,
         Scaffold(
           backgroundColor: Colors.white,
-          body: Column(
+          body: ListView(
             children: [
               NavigationBar(),
               LargeChild(),
