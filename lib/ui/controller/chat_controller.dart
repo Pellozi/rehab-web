@@ -25,7 +25,7 @@ class ChatController extends BaseController {
             '${ApiProvider.instance.apiBaseUrl}chat/getChat?pacienteCpf=$cpfPaciente&especialistaCpf=$cpfEspecialista'),
         headers: {'Authorization': 'Bearer ${ApiProvider.instance.token}'},
       );
-      final List<dynamic> responseMap = jsonDecode(response.body);
+      final List<dynamic> responseMap = jsonDecode(utf8.decode(response.bodyBytes));
       final List<ChatModel> messages =
           responseMap.map<ChatModel>((m) => ChatModel.fromMap(Map<String, dynamic>.from(m))).toList();
       chats.value = messages;

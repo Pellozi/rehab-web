@@ -25,7 +25,7 @@ class PatientController extends BaseController {
         Uri.parse('${ApiProvider.instance.apiBaseUrl}paciente/listPaciente'),
         headers: {'Authorization': 'Bearer ${ApiProvider.instance.token}'},
       );
-      final List<dynamic> responseMap = jsonDecode(response.body);
+      final List<dynamic> responseMap = jsonDecode(utf8.decode(response.bodyBytes));
       final List<PatientModel> patients =
           responseMap.map<PatientModel>((m) => PatientModel.fromMap(Map<String, dynamic>.from(m))).toList();
       listPatient.value = patients;

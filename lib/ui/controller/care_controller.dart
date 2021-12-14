@@ -30,7 +30,7 @@ class CareController extends BaseController {
         Uri.parse('${ApiProvider.instance.apiBaseUrl}cuidados/getByCpf?cpf=$cpf'),
         headers: {'Authorization': 'Bearer ${ApiProvider.instance.token}'},
       );
-      final List<dynamic> responseMap = jsonDecode(response.body);
+      final List<dynamic> responseMap = jsonDecode(utf8.decode(response.bodyBytes));
       final List<CareModel> cares =
           responseMap.map<CareModel>((m) => CareModel.fromMap(Map<String, dynamic>.from(m))).toList();
       listCares.value = cares;
@@ -51,7 +51,7 @@ class CareController extends BaseController {
         Uri.parse('${ApiProvider.instance.apiBaseUrl}cuidados/getExercicioByCpf?cpf=$cpf'),
         headers: {'Authorization': 'Bearer ${ApiProvider.instance.token}'},
       );
-      final List<dynamic> responseMap = jsonDecode(response.body);
+      final List<dynamic> responseMap = jsonDecode(utf8.decode(response.bodyBytes));
       final List<CareExerciseModel> cares =
           responseMap.map<CareExerciseModel>((m) => CareExerciseModel.fromMap(Map<String, dynamic>.from(m))).toList();
       listExercise.value = cares;

@@ -25,7 +25,7 @@ class DoctorController extends BaseController {
         Uri.parse('${ApiProvider.instance.apiBaseUrl}especialista/listEspecialista'),
         headers: {'Authorization': 'Bearer ${ApiProvider.instance.token}'},
       );
-      final List<dynamic> responseMap = jsonDecode(response.body);
+      final List<dynamic> responseMap = jsonDecode(utf8.decode(response.bodyBytes));
       final List<DoctorModel> doctors =
           responseMap.map<DoctorModel>((m) => DoctorModel.fromMap(Map<String, dynamic>.from(m))).toList();
       listDoctors.value = doctors;

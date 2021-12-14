@@ -29,7 +29,7 @@ class CheckInController extends BaseController {
         Uri.parse('${ApiProvider.instance.apiBaseUrl}checkin/listMonitoramento?cpf=$cpfPaciente'),
         headers: {'Authorization': 'Bearer ${ApiProvider.instance.token}'},
       );
-      final List<dynamic> responseMap = jsonDecode(response.body);
+      final List<dynamic> responseMap = jsonDecode(utf8.decode(response.bodyBytes));
       final List<MonitoringModel> incidentsList =
           responseMap.map<MonitoringModel>((m) => MonitoringModel.fromMap(Map<String, dynamic>.from(m))).toList();
       monitoring.value = incidentsList;
@@ -56,7 +56,7 @@ class CheckInController extends BaseController {
         Uri.parse('${ApiProvider.instance.apiBaseUrl}checkin/listIncidentes?cpf=$cpfPaciente'),
         headers: {'Authorization': 'Bearer ${ApiProvider.instance.token}'},
       );
-      final List<dynamic> responseMap = jsonDecode(response.body);
+      final List<dynamic> responseMap = jsonDecode(utf8.decode(response.bodyBytes));
       final List<IncidentModel> incidentsList =
           responseMap.map<IncidentModel>((m) => IncidentModel.fromMap(Map<String, dynamic>.from(m))).toList();
       incidents.value = incidentsList;
