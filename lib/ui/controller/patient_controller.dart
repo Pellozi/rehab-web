@@ -86,7 +86,12 @@ class PatientModel {
 
   String nomeEspecialista;
 
+  String peso;
+
+  String dtNasc;
+
   bool habilitado;
+
   PatientModel(
       {this.cpf,
       this.nome,
@@ -102,6 +107,8 @@ class PatientModel {
       this.dtInicio,
       this.nrDias,
       this.habilitado,
+      this.peso,
+      this.dtNasc,
       this.nomeEspecialista});
 
   factory PatientModel.fromMap(Map<String, dynamic> map) {
@@ -118,6 +125,8 @@ class PatientModel {
       dtFim: map['dtFim'] ?? '',
       dtInicio: map['dtInicio'] ?? '',
       nomeEspecialista: map['nomeEspecialista'] ?? '',
+      peso: map['peso'] ?? '',
+      dtNasc: map['dtNasc'] ?? '',
       fumante: map['fumante'] ?? false,
       diabetico: map['diabetico'] ?? false,
       altura: map['altura'] ?? 0.0,

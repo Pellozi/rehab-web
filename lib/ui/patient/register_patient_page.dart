@@ -33,6 +33,9 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
   final TextEditingController eventController = new TextEditingController(text: '');
   final TextEditingController treatmentController = new TextEditingController(text: '');
   final TextEditingController dataController = new TextEditingController(text: '');
+  final TextEditingController birthDateController = new TextEditingController(text: '');
+  final TextEditingController weightController = new MoneyMaskedTextController(decimalSeparator: '.', precision: 2);
+  final TextEditingController idadeController = new TextEditingController(text: '');
   final TextEditingController heightController = new MoneyMaskedTextController(decimalSeparator: '.', precision: 2);
   final PatientController patientController = Get.find();
 
@@ -154,25 +157,44 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                                                       hintStyle: TextStyle(fontSize: 21.w)),
                                                 ),
                                                 TextField(
-                                                    controller: dataController,
-                                                    style: TextStyle(fontSize: 21.w),
-                                                    decoration: InputDecoration(
-                                                      icon: Icon(Icons.email),
-                                                      labelText: 'Tempo de reabilitação',
-                                                      hintText: navigationBarController.patient.value.nrDias.toString(),
-                                                      labelStyle: TextStyle(fontSize: 21.w),
-                                                      hintStyle: TextStyle(fontSize: 21.w),
-                                                    )),
-                                                TextField(
                                                     controller: heightController,
                                                     style: TextStyle(fontSize: 21.w),
                                                     decoration: InputDecoration(
-                                                        icon: Icon(Icons.lock),
+                                                        icon: Icon(Icons.person),
                                                         labelText: 'Altura',
                                                         hintText:
                                                             navigationBarController.patient.value.altura.toString(),
                                                         labelStyle: TextStyle(fontSize: 21.w),
                                                         hintStyle: TextStyle(fontSize: 21.w))),
+                                                TextField(
+                                                    controller: weightController,
+                                                    style: TextStyle(fontSize: 21.w),
+                                                    decoration: InputDecoration(
+                                                        icon: Icon(Icons.person),
+                                                        labelText: 'Peso',
+                                                        hintText: navigationBarController.patient.value.peso.toString(),
+                                                        labelStyle: TextStyle(fontSize: 21.w),
+                                                        hintStyle: TextStyle(fontSize: 21.w))),
+                                                TextField(
+                                                    controller: birthDateController,
+                                                    style: TextStyle(fontSize: 21.w),
+                                                    decoration: InputDecoration(
+                                                        icon: Icon(Icons.person),
+                                                        labelText: 'Data de nascimento',
+                                                        hintText:
+                                                            navigationBarController.patient.value.dtNasc.toString(),
+                                                        labelStyle: TextStyle(fontSize: 21.w),
+                                                        hintStyle: TextStyle(fontSize: 21.w))),
+                                                TextField(
+                                                    controller: dataController,
+                                                    style: TextStyle(fontSize: 21.w),
+                                                    decoration: InputDecoration(
+                                                      icon: Icon(Icons.person),
+                                                      labelText: 'Tempo de reabilitação',
+                                                      hintText: navigationBarController.patient.value.nrDias.toString(),
+                                                      labelStyle: TextStyle(fontSize: 21.w),
+                                                      hintStyle: TextStyle(fontSize: 21.w),
+                                                    )),
                                               ],
                                             ),
                                           );
@@ -197,6 +219,12 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                                                 ..tratamento = treatmentController.text == ''
                                                     ? navigationBarController.patient.value.tratamento
                                                     : treatmentController.text
+                                                ..dtNasc = birthDateController.text == ''
+                                                    ? navigationBarController.patient.value.dtNasc
+                                                    : birthDateController.text
+                                                ..peso = treatmentController.text == ''
+                                                    ? navigationBarController.patient.value.peso
+                                                    : weightController.text
                                                 ..password = navigationBarController.patient.value.password
                                                 ..fumante = false
                                                 ..respCadastro = authController.user.value.cpf
@@ -333,94 +361,102 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                             ),
                           ],
                         ),
-                        Obx(() => ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: checkInController.incidents.length,
-                              itemBuilder: (context, index) {
-                                return SharedFilesItemIncident(
-                                    icon: Icons.warning_amber_outlined,
-                                    color: Colors.red[800],
-                                    model: checkInController.incidents[index]);
-                              },
-                            )),
-                        Obx(() => ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: checkInController.pressao.length,
-                              itemBuilder: (context, index) {
-                                return SharedFilesItemIncidentPressao(
-                                    icon: Icons.fact_check,
-                                    color: Colors.blue,
-                                    model: checkInController.pressao[index]);
-                              },
-                            )),
-                        Obx(() => ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: checkInController.freqCardiacaPre.length,
-                              itemBuilder: (context, index) {
-                                return SharedFilesItemIncidentFrequency(
-                                    icon: Icons.fact_check,
-                                    color: Colors.blue,
-                                    model: checkInController.freqCardiacaPre[index]);
-                              },
-                            )),
-                        Obx(() => ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: checkInController.saturacao.length,
-                              itemBuilder: (context, index) {
-                                return SharedFilesItemIncidentSaturacao(
-                                    icon: Icons.fact_check,
-                                    color: Colors.blue,
-                                    model: checkInController.freqCardiacaPre[index]);
-                              },
-                            )),
-                        Obx(() => ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: checkInController.temperatura.length,
-                              itemBuilder: (context, index) {
-                                return SharedFilesItemIncidentTemp(
-                                    icon: Icons.fact_check,
-                                    color: Colors.blue,
-                                    model: checkInController.freqCardiacaPre[index]);
-                              },
-                            )),
-                        Obx(() => ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: checkInController.glicemia.length,
-                              itemBuilder: (context, index) {
-                                return SharedFilesItemIncidentBemEstar(
-                                    icon: Icons.fact_check,
-                                    color: Colors.lightGreenAccent,
-                                    model: checkInController.freqCardiacaPre[index]);
-                              },
-                            )),
-                        Obx(() => ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: checkInController.bemEstar.length,
-                              itemBuilder: (context, index) {
-                                return SharedFilesItemIncidentGlicemia(
-                                    icon: Icons.fact_check,
-                                    color: Colors.orangeAccent,
-                                    model: checkInController.freqCardiacaPre[index]);
-                              },
-                            )),
-                        Obx(() => ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: careController.listExerciseEsforco.length,
-                              itemBuilder: (context, index) {
-                                return SharedFilesItemIncidentEsforco(
-                                    icon: Icons.fact_check,
-                                    color: Colors.lime,
-                                    model: careController.listExerciseEsforco[index]);
-                              },
-                            )),
+                        if (checkInController.incidents.length > 0)
+                          Obx(() => ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: checkInController.incidents.length,
+                                itemBuilder: (context, index) {
+                                  return SharedFilesItemIncident(
+                                      icon: Icons.warning_amber_outlined,
+                                      color: Colors.red[800],
+                                      model: checkInController.incidents[index]);
+                                },
+                              )),
+                        if (checkInController.pressao.length > 0)
+                          Obx(() => ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: checkInController.pressao.length,
+                                itemBuilder: (context, index) {
+                                  return SharedFilesItemIncidentPressao(
+                                      icon: Icons.fact_check,
+                                      color: Colors.blue,
+                                      model: checkInController.pressao[index]);
+                                },
+                              )),
+                        if (checkInController.freqCardiacaPre.length > 0)
+                          Obx(() => ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: checkInController.freqCardiacaPre.length,
+                                itemBuilder: (context, index) {
+                                  return SharedFilesItemIncidentFrequency(
+                                      icon: Icons.fact_check,
+                                      color: Colors.blue,
+                                      model: checkInController.freqCardiacaPre[index]);
+                                },
+                              )),
+                        if (checkInController.saturacao.length > 0)
+                          Obx(() => ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: checkInController.saturacao.length,
+                                itemBuilder: (context, index) {
+                                  return SharedFilesItemIncidentSaturacao(
+                                      icon: Icons.fact_check,
+                                      color: Colors.blue,
+                                      model: checkInController.freqCardiacaPre[index]);
+                                },
+                              )),
+                        if (checkInController.temperatura.length > 0)
+                          Obx(() => ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: checkInController.temperatura.length,
+                                itemBuilder: (context, index) {
+                                  return SharedFilesItemIncidentTemp(
+                                      icon: Icons.fact_check,
+                                      color: Colors.blue,
+                                      model: checkInController.freqCardiacaPre[index]);
+                                },
+                              )),
+                        if (checkInController.glicemia.length > 0)
+                          Obx(() => ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: checkInController.glicemia.length,
+                                itemBuilder: (context, index) {
+                                  return SharedFilesItemIncidentBemEstar(
+                                      icon: Icons.fact_check,
+                                      color: Colors.lightGreenAccent,
+                                      model: checkInController.freqCardiacaPre[index]);
+                                },
+                              )),
+                        if (checkInController.bemEstar.length > 0)
+                          Obx(() => ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: checkInController.bemEstar.length,
+                                itemBuilder: (context, index) {
+                                  return SharedFilesItemIncidentGlicemia(
+                                      icon: Icons.fact_check,
+                                      color: Colors.orangeAccent,
+                                      model: checkInController.bemEstar[index]);
+                                },
+                              )),
+                        if (careController.listExerciseEsforco.length > 0)
+                          Obx(() => ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: careController.listExerciseEsforco.length,
+                                itemBuilder: (context, index) {
+                                  return SharedFilesItemIncidentEsforco(
+                                      icon: Icons.fact_check,
+                                      color: Colors.lime,
+                                      model: careController.listExerciseEsforco[index]);
+                                },
+                              )),
                       ],
                     ),
                   ),

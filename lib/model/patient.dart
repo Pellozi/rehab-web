@@ -33,6 +33,12 @@ abstract class PatientResponse implements Built<PatientResponse, PatientResponse
   String get respCadastro;
   @nullable
   bool get habilitado;
+  @nullable
+  String get peso;
+  @nullable
+  String get dtNasc;
+  @nullable
+  int get idade;
   PatientResponse._();
 
   factory PatientResponse([updates(PatientResponseBuilder b)]) = _$PatientResponse;

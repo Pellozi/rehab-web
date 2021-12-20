@@ -103,6 +103,14 @@ class _LargeChildState extends State<LargeChild> {
           value: 'medico', child: new Text('Médico', style: TextStyle(color: Colors.black, fontSize: 18.w))));
       _dropDownMenu.add(new DropdownMenuItem<String>(
           value: 'enfermeiro', child: new Text('Enfermeiro', style: TextStyle(color: Colors.black, fontSize: 18.w))));
+      _dropDownMenu.add(new DropdownMenuItem<String>(
+          value: 'psicologo', child: new Text('Psicólogo', style: TextStyle(color: Colors.black, fontSize: 18.w))));
+      _dropDownMenu.add(new DropdownMenuItem<String>(
+          value: 'social',
+          child: new Text('Assistente Social', style: TextStyle(color: Colors.black, fontSize: 18.w))));
+      _dropDownMenu.add(new DropdownMenuItem<String>(
+          value: 'fisioterapeuta',
+          child: new Text('Fisioterapeuta', style: TextStyle(color: Colors.black, fontSize: 18.w))));
     });
 
     super.initState();

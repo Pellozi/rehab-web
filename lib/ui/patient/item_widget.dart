@@ -33,7 +33,7 @@ class ItemWidget extends StatelessWidget {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(item.descricao, style: TextStyle(fontSize: 20)),
+                  Expanded(child: Text(item.descricao, style: TextStyle(fontSize: 20))),
                   if (item.quantidade != null) Text(item.quantidade, style: TextStyle(fontSize: 20)),
                 ],
               ),

@@ -51,6 +51,10 @@ class _LargeChildState extends State<LargeChild> {
   final TextEditingController eventController = new TextEditingController(text: '');
   final TextEditingController treatmentController = new TextEditingController(text: '');
   final TextEditingController dataController = new TextEditingController(text: '');
+  final TextEditingController birthDateController = new TextEditingController(text: '');
+  final TextEditingController weightController = new MoneyMaskedTextController(decimalSeparator: '.', precision: 2);
+  final TextEditingController idadeController = new TextEditingController(text: '');
+  final TextEditingController cepController = new TextEditingController(text: '');
   final TextEditingController heightController = new MoneyMaskedTextController(decimalSeparator: '.', precision: 2);
   final PatientController patientController = Get.find();
   String birthDate;
@@ -81,54 +85,112 @@ class _LargeChildState extends State<LargeChild> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 5.w, left: 10.w, right: 10.w),
-                  child: TextFieldWidget('Nome', nameController,
-                      hasAllPadding: false,
-                      fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
-                      labelTitle: 'Nome'),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
-                  child: TextFieldWidget(
-                    'Cpf',
-                    cpfController,
-                    fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
-                    labelTitle: 'Cpf',
-                    hasAllPadding: false,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
-                  child: TextFieldWidget(
-                    'Altura',
-                    heightController,
-                    fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
-                    labelTitle: 'Altura',
-                    hasAllPadding: false,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
-                  child: TextFieldWidget('Motivo do tratamento', eventController,
-                      fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
-                      labelTitle: 'Motivo do tratamento',
-                      hasAllPadding: false),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
-                  child: TextFieldWidget('Tipo de procedimento', treatmentController,
-                      fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
-                      labelTitle: 'Tipo de procedimento',
-                      hasAllPadding: false),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
-                  child: TextFieldWidget('Tempo de reabilitação', dataController,
-                      hasPadding: false,
-                      fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
-                      labelTitle: 'Tempo de reabilitação(dias)',
-                      hasAllPadding: false),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: 5.w, left: 10.w, right: 10.w),
+                            child: TextFieldWidget('Nome', nameController,
+                                hasAllPadding: false,
+                                fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
+                                labelTitle: 'Nome'),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
+                            child: TextFieldWidget(
+                              'Cpf',
+                              cpfController,
+                              fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
+                              labelTitle: 'Cpf',
+                              hasAllPadding: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
+                            child: TextFieldWidget(
+                              'Altura',
+                              heightController,
+                              fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
+                              labelTitle: 'Altura',
+                              hasAllPadding: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
+                            child: TextFieldWidget(
+                              'Peso',
+                              weightController,
+                              fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
+                              labelTitle: 'Peso',
+                              hasAllPadding: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
+                            child: TextFieldWidget(
+                              'Idade',
+                              idadeController,
+                              fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
+                              labelTitle: 'Idade',
+                              hasAllPadding: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
+                            child: TextFieldWidget(
+                              'Data de nascimento',
+                              birthDateController,
+                              fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
+                              labelTitle: 'Data de nascimento',
+                              hasAllPadding: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
+                            child: TextFieldWidget(
+                              'Endereço',
+                              cepController,
+                              fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
+                              labelTitle: 'Endereço',
+                              hasAllPadding: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
+                            child: TextFieldWidget('Motivo do tratamento', eventController,
+                                fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
+                                labelTitle: 'Motivo do tratamento',
+                                hasAllPadding: false),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
+                            child: TextFieldWidget('Tipo de procedimento', treatmentController,
+                                fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
+                                labelTitle: 'Tipo de procedimento',
+                                hasAllPadding: false),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.w, left: 10.w, right: 10.w),
+                            child: TextFieldWidget('Tempo de reabilitação', dataController,
+                                hasPadding: false,
+                                fontSize: MediaQuery.of(context).size.width > 1537 ? 22.w : 18.w,
+                                labelTitle: 'Tempo de reabilitação(dias)',
+                                hasAllPadding: false),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -151,6 +213,9 @@ class _LargeChildState extends State<LargeChild> {
                             ..fumante = false
                             ..respCadastro = authController.user.value.cpf
                             ..diabetico = false
+                            ..dtNasc = birthDateController.text
+                            ..peso = weightController.text
+                            ..idade = int.tryParse(idadeController.text)
                             ..nrDias = int.tryParse(dataController.text)));
                           if (patientController.status.isSuccess) {
                             await patientController.getPatients();
