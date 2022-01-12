@@ -406,7 +406,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                                   return SharedFilesItemIncidentSaturacao(
                                       icon: Icons.fact_check,
                                       color: Colors.blue,
-                                      model: checkInController.freqCardiacaPre[index]);
+                                      model: checkInController.saturacao[index]);
                                 },
                               )),
                         if (checkInController.temperatura.length > 0)
@@ -418,7 +418,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                                   return SharedFilesItemIncidentTemp(
                                       icon: Icons.fact_check,
                                       color: Colors.blue,
-                                      model: checkInController.freqCardiacaPre[index]);
+                                      model: checkInController.temperatura[index]);
                                 },
                               )),
                         if (checkInController.glicemia.length > 0)
@@ -427,10 +427,10 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                                 physics: NeverScrollableScrollPhysics(),
                                 itemCount: checkInController.glicemia.length,
                                 itemBuilder: (context, index) {
-                                  return SharedFilesItemIncidentBemEstar(
+                                  return SharedFilesItemIncidentGlicemia(
                                       icon: Icons.fact_check,
                                       color: Colors.lightGreenAccent,
-                                      model: checkInController.freqCardiacaPre[index]);
+                                      model: checkInController.glicemia[index]);
                                 },
                               )),
                         if (checkInController.bemEstar.length > 0)
@@ -439,7 +439,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
                                 physics: NeverScrollableScrollPhysics(),
                                 itemCount: checkInController.bemEstar.length,
                                 itemBuilder: (context, index) {
-                                  return SharedFilesItemIncidentGlicemia(
+                                  return SharedFilesItemIncidentBemEstar(
                                       icon: Icons.fact_check,
                                       color: Colors.orangeAccent,
                                       model: checkInController.bemEstar[index]);
@@ -775,7 +775,7 @@ class _RegisterPatientPageState extends State<RegisterPatientPage> {
       ],
       subject: 'Aplicativo Rehab.it',
       body:
-          'Olá, Tudo bem?\n\nSegue o link do aplicativo para voce acompanhar a sua reabilitação\n\n\n\n https://drive.google.com/drive/folders/11byU6BWT_ZS94t0hhX6VQCCM10-RG_Zt?usp=sharing',
+          'Olá, Tudo bem?\n\nSegue o link do aplicativo para voce acompanhar a sua reabilitação\n\n\n\n https://rehab-it-app.web.app',
     );
 
     try {

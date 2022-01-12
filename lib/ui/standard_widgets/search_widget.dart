@@ -85,7 +85,7 @@ class TextFieldWidget extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: RehabColors().mainColor, borderRadius: BorderRadius.circular(40.w)),
                             child: Text(
-                              'Pesqusiar',
+                              'Pesquisar',
                               style: TextStyle(color: Colors.white, fontSize: 18.w),
                             ),
                           ),
